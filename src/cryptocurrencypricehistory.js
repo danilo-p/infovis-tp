@@ -36,7 +36,13 @@ async function getCoinData(coin) {
   return { coin, data: response.data };
 }
 
+let cachedData = null;
+
 async function getAllCoinData() {
+  if (cachedData) {
+    return cachedData;
+  }
+
   let promises = coins.map(getCoinData);
 
   let allData = await Promise.all(promises);
@@ -47,6 +53,8 @@ async function getAllCoinData() {
       header: true,
     }).data;
   });
+
+  cachedData = allDataMap;
 
   return allDataMap;
 }
