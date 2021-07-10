@@ -1,6 +1,6 @@
-import "./App.css";
 import * as React from "react";
 import cryptocurrencypricehistory from "./cryptocurrencypricehistory";
+import RawData from "./RawData";
 
 class App extends React.Component {
   constructor(props) {
@@ -34,7 +34,16 @@ class App extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return <div>{JSON.stringify(data)}</div>;
+      return (
+        <div className="container">
+          <header>
+            <h1>Visualização de Dados - Trabalho Prático</h1>
+          </header>
+          <div className="visualization-section">
+            <RawData data={data} />
+          </div>
+        </div>
+      );
     }
   }
 }

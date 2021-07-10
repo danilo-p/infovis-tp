@@ -1,0 +1,7 @@
+.visualization-section {
+  padding: 20px 0;
+}
+
+.visualization-section + .visualization-section {
+  border-top: 1px solid 
+}
