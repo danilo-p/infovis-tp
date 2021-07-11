@@ -1,15 +1,24 @@
 import * as d3 from "d3";
 import * as React from "react";
+import CoinSelectField from "./CoinSelectField";
 
 // D3 Example: https://observablehq.com/@d3/line-chart
 class ClosePriceOverTime extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
+    this.state = {
+      selectedCoin: "",
+    };
   }
 
-  componentDidMount() {
-    let data = this.props.data["Aave"];
+  componentDidUpdate() {
+    let { selectedCoin } = this.state;
+    if (!selectedCoin) {
+      return;
+    }
+
+    let data = this.props.data[selectedCoin];
     let height = 500;
     let width = 1000;
     let margin = { top: 20, right: 30, bottom: 30, left: 40 };
@@ -50,9 +59,11 @@ class ClosePriceOverTime extends React.Component {
       .x((d) => x(d.Date))
       .y((d) => y(d.Close));
 
-    const svg = d3
-      .select(this.myRef.current)
-      .attr("viewBox", [0, 0, width, height]);
+    const svg = d3.select(this.myRef.current);
+
+    svg.selectAll("*").remove();
+
+    svg.attr("viewBox", [0, 0, width, height]);
 
     svg.append("g").call(xAxis);
 
@@ -69,8 +80,19 @@ class ClosePriceOverTime extends React.Component {
       .attr("d", line);
   }
 
+  selectCoin = (selectedCoin) => {
+    this.setState({
+      selectedCoin,
+    });
+  };
+
   render() {
-    return <svg ref={this.myRef}></svg>;
+    return (
+      <div>
+        <CoinSelectField onChange={this.selectCoin} data={this.props.data} />
+        <svg ref={this.myRef}></svg>
+      </div>
+    );
   }
 }
 
