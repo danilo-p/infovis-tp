@@ -36,6 +36,35 @@ async function getCoinData(coin) {
   return { coin, data: response.data };
 }
 
+function parseData(allData) {
+  Object.keys(allData).forEach((coin) => {
+    allData[coin] = allData[coin]
+      .map((row) => {
+        if (!row.SNo) {
+          return null;
+        }
+
+        try {
+          return {
+            SNo: Number.parseInt(row.SNo),
+            Name: row.Name,
+            Symbol: row.Symbol,
+            Date: new Date(row.Date),
+            High: Number.parseFloat(row.High),
+            Low: Number.parseFloat(row.Low),
+            Open: Number.parseFloat(row.Open),
+            Close: Number.parseFloat(row.Close),
+            Volume: Number.parseFloat(row.Volume),
+            Marketcap: Number.parseFloat(row.Marketcap),
+          };
+        } catch (error) {
+          return null;
+        }
+      })
+      .filter((row) => row);
+  });
+}
+
 let cachedData = null;
 
 async function getAllCoinData() {
@@ -53,6 +82,8 @@ async function getAllCoinData() {
       header: true,
     }).data;
   });
+
+  parseData(allDataMap);
 
   cachedData = allDataMap;
 
