@@ -1,6 +1,7 @@
 import * as React from "react";
 import cryptocurrencypricehistory from "./cryptocurrencypricehistory";
-import RawData from "./RawData";
+import CoinRawData from "./CoinRawData";
+import ClosePriceOverTime from "./ClosePriceOverTime";
 
 class App extends React.Component {
   constructor(props) {
@@ -36,11 +37,16 @@ class App extends React.Component {
     } else {
       return (
         <div className="container">
-          <header>
+          <header className="page-header">
             <h1>Visualização de Dados - Trabalho Prático</h1>
           </header>
           <div className="visualization-section">
-            <RawData data={data} />
+            <h2>Preço de fechamento ao longo do tempo</h2>
+            <ClosePriceOverTime data={data} />
+          </div>
+          <div className="visualization-section">
+            <h2>Todos os dados</h2>
+            <CoinRawData data={data} />
           </div>
         </div>
       );
