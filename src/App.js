@@ -2,6 +2,7 @@ import * as React from "react";
 import cryptocurrencypricehistory from "./cryptocurrencypricehistory";
 import CoinRawData from "./CoinRawData";
 import ClosePriceOverTime from "./ClosePriceOverTime";
+import BarChart from "./BarChart";
 
 class App extends React.Component {
   constructor(props) {
@@ -40,6 +41,10 @@ class App extends React.Component {
           <header className="page-header">
             <h1>Visualização de Dados - Trabalho Prático</h1>
           </header>
+          <div className="visualization-section">
+            <h2>Visualização em Grafico de Barras</h2>
+            <BarChart data={data} />
+          </div>
           <div className="visualization-section">
             <h2>Preço de fechamento ao longo do tempo</h2>
             <ClosePriceOverTime data={data} />
