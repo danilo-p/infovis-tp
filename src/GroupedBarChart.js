@@ -13,7 +13,8 @@ class GroupedBarChart extends React.Component {
     let coinNames = Object.keys(data)
 
     for (let i = 0; i < coinNames.lenght; i++) {
-      data[i]
+      let currentCoinName = coinNames[i];
+      console.log(data[currentCoinName])
     }
 
     return result;
