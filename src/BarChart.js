@@ -28,7 +28,6 @@ class BarChart extends React.Component {
         "value": value
       })
     }
-    console.log(data);
 
     const svg = d3.select(this.myRef.current)
       .attr("viewBox", [0, 0, width, height]);

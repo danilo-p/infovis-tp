@@ -9,15 +9,37 @@ class GroupedBarChart extends React.Component {
   }
 
   getGrowthRate(data) {
-    let result = {}
+    let coinsGrowthRate = {}
     let coinNames = Object.keys(data)
+    let firstValue = 0, lastValue = 0
+    let year
+    let growthRate = 0
 
-    for (let i = 0; i < coinNames.lenght; i++) {
-      let currentCoinName = coinNames[i];
-      console.log(data[currentCoinName])
+    for (let i = 0; i < coinNames.lenght; i++) { //para cada moeda
+      let currentCoinName = coinNames[i] //pega o nome atual da moeda
+
+      if (!coinsGrowthRate[currentCoinName]) { //verifica se a saída coinsGrowthRate possui aquela moeda, se não possuir ela é criada
+        coinsGrowthRate[currentCoinName] = {}
+      }
+
+      year = data[currentCoinName][0].Date.getYear() //pega o primeiro ano existente da moeda
+      firstValue = data[currentCoinName][0].Marketcap // pega o primeiro marketcap da moeda
+
+      for (let j = 0; j < data[currentCoinName].lenght; j++) { //calcula a taxa por ano da moeda atual
+        if (data[currentCoinName][j].Date.getYear() !== year) { //verifica mudança de ano para calcular a taxa
+          lastValue = data[currentCoinName][j - 1].Marketcap //ultimo valor do ano corrente
+          growthRate = ((lastValue - firstValue) / firstValue) * 100  //taxa de crescimento em porcentagem
+          coinsGrowthRate[currentCoinName].push({
+            "year": year - 1,
+            "growthRate": growthRate
+          })
+          firstValue = data[currentCoinName][j].Marketcap
+          year = data[currentCoinName][j].Date.getYear()
+        }
+      }
     }
 
-    return result;
+    return coinsGrowthRate;
   }
 
   componentDidMount() {
@@ -25,8 +47,8 @@ class GroupedBarChart extends React.Component {
     let height = 500;
     let width = 1000;
     let margin = { top: 20, right: 30, bottom: 30, left: 40 };
-
     let values = this.getGrowthRate(data);
+    console.log(values)
 
     // let y = d3
     //   .scaleLinear()
