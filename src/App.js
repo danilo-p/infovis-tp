@@ -3,6 +3,7 @@ import cryptocurrencypricehistory from "./cryptocurrencypricehistory";
 import CoinRawData from "./CoinRawData";
 import ClosePriceOverTime from "./ClosePriceOverTime";
 import BarChart from "./BarChart";
+import GroupedBarChart from "./GroupedBarChart";
 import DailyReturnOverTime from "./DailyReturnOverTime";
 
 class App extends React.Component {
@@ -47,12 +48,16 @@ class App extends React.Component {
             <BarChart data={data} />
           </div>
           <div className="visualization-section">
+            <h2>Visualização em Grafico de Barras Agrupado (anual)</h2>
+            <GroupedBarChart data={data} />
+          </div>
+          <div className="visualization-section">
             <h2>Preço de fechamento ao longo do tempo</h2>
             <ClosePriceOverTime data={data} />
+          </div>
           <div className="visualization-section">
             <h2>Retorno diário ao logo do tempo</h2>
             <DailyReturnOverTime data={data} />
-          </div>
           </div>
           <div className="visualization-section">
             <h2>Todos os dados</h2>
