@@ -25,7 +25,10 @@ class HorizonChart extends React.Component {
     let startDate = new Date();
     startDate.setMonth(startDate.getMonth() - 12);
     let endDate = new Date();
+    let allCoins = Object.keys(props.data);
     this.state = {
+      allCoins,
+      selectedCoins: allCoins,
       overlap: 5,
       startDate,
       endDate,
@@ -38,7 +41,11 @@ class HorizonChart extends React.Component {
     let allCoins = Object.keys(data);
     let transformedData = {
       dates: [],
-      series: allCoins.map((coin) => ({ name: coin, values: [] }))
+      series: allCoins.sort()
+        .map((coin) => this.state.selectedCoins.includes(coin)
+          ? ({ name: coin, values: [] })
+          : null)
+        .filter((coin) => !!coin)
     };
     let startDate = this.state ? this.state.startDate : null;
     let endDate = this.state ? this.state.endDate : null;
@@ -181,6 +188,55 @@ class HorizonChart extends React.Component {
     });
   }
 
+  handleCoinSelectionChange = (coin) => {
+    let { selectedCoins } = this.state;
+
+    if (selectedCoins.includes(coin)) {
+      selectedCoins  = selectedCoins.filter((selectedCoin) => selectedCoin !== coin);
+    } else {
+      selectedCoins.push(coin);
+    }
+
+    this.setState({ selectedCoins });
+  }
+
+  handleSelectAllCoins = () => {
+    if (this.state.selectedCoins.length === this.state.allCoins.length) {
+      this.setState({
+        selectedCoins: []
+      })
+    } else {
+      this.setState({
+        selectedCoins: this.state.allCoins
+      })
+    }
+  }
+
+  renderCoinSelector = () => {
+    return (
+      <span>
+        <label className='coin-field'>
+          <input
+            type="checkbox"
+            checked={this.state.selectedCoins.length === this.state.allCoins.length}
+            onChange={this.handleSelectAllCoins}
+          /> Selecionar todas
+        </label>
+        {
+          this.state.allCoins.sort().map((coin) => (
+            <label key={coin} className='coin-field'>
+              <input
+                type="checkbox"
+                checked={this.state.selectedCoins.includes(coin)}
+                onChange={() => this.handleCoinSelectionChange(coin)}
+              /> {coin}
+            </label>
+          ))
+        }
+      </span>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -189,7 +245,7 @@ class HorizonChart extends React.Component {
           <select
             onChange={this.handleSelectedMetricChange}
             value={this.state.selectedMetric}
-            className="horizon-chart-input"
+            className="horizon-chart-input form-control"
           >
             <option value="Marketcap">Marketcap</option>
             <option value="Close">Close</option>
@@ -206,7 +262,7 @@ class HorizonChart extends React.Component {
             type="date" 
             value={this.state.startDate.toISOString().split("T")[0]} 
             onChange={this.handleStartDateChange}
-            className="horizon-chart-input"
+            className="horizon-chart-input form-control"
           />
 
           <span className="horizon-chart-input-separator">•</span>
@@ -216,7 +272,7 @@ class HorizonChart extends React.Component {
             type="date" 
             value={this.state.endDate.toISOString().split("T")[0]} 
             onChange={this.handleEndDateChange}
-            className="horizon-chart-input"
+            className="horizon-chart-input form-control"
           />
 
           <span className="horizon-chart-input-separator">•</span>
@@ -231,6 +287,9 @@ class HorizonChart extends React.Component {
             step="1"
             className="horizon-chart-input"
           />
+        </div>
+        <div className='coin-selector-bar'>
+          {this.renderCoinSelector()}
         </div>
         <svg ref={this.svgRef}></svg>
       </div>
