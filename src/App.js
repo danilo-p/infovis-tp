@@ -2,6 +2,7 @@ import * as React from "react";
 import cryptocurrencypricehistory from "./cryptocurrencypricehistory";
 import CoinRawData from "./CoinRawData";
 import ClosePriceOverTime from "./ClosePriceOverTime";
+import HorizonChart from "./HorizonChart";
 import BarChart from "./BarChart";
 import GroupedBarChart from "./GroupedBarChart";
 import DailyReturnOverTime from "./DailyReturnOverTime";
@@ -43,6 +44,10 @@ class App extends React.Component {
           <header className="page-header">
             <h1>Visualização de Dados - Trabalho Prático</h1>
           </header>
+          <div className="visualization-section">
+            <h2>Gráfico de Horizonte</h2>
+            <HorizonChart data={data} />
+          </div>
           <div className="visualization-section">
             <h2>Visualização em Grafico de Barras</h2>
             <BarChart data={data} />
