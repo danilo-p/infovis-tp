@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./CoinSelectField.css";
 
 class CoinSelectField extends React.Component {
   constructor(props) {
@@ -37,7 +38,11 @@ class CoinSelectField extends React.Component {
 
   render() {
     return (
-      <select onChange={this.selectCoin} value={this.state.selectedCoin}>
+      <select
+        className="form-control coin-select-field"
+        onChange={this.selectCoin}
+        value={this.state.selectedCoin}
+      >
         {this.getCoinOptions()}
       </select>
     );
