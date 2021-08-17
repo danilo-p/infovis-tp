@@ -44,7 +44,7 @@ class App extends React.Component {
           <header className="page-header">
             <h1>Visualização de Dados - Trabalho Prático</h1>
           </header>
-          <div className="visualization-section">
+          <div id="horizon-chart" className="visualization-section">
             <h2>Gráfico de Horizonte</h2>
             <HorizonChart data={data} />
           </div>
