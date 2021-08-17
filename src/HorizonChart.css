@@ -23,3 +23,7 @@
 .horizon-chart-filter {
   display: inline-block;
 }
+
+.horizon-chart-insights {
+  margin-top: 30px;
+}
