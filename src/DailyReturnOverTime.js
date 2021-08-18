@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import * as React from "react";
 import CoinSelectField from "./CoinSelectField";
+import "./DailyReturnOverTime.css";
 
 class DailyReturnOverTime extends React.Component {
   constructor(props) {
@@ -175,11 +176,23 @@ class DailyReturnOverTime extends React.Component {
     });
   };
 
+  renderInsights = () => {
+    return (
+      <div className="daily-return-insights">
+        <p>Observando a visualização de retornos diários ao longo do tempo, podemos concluir que a volatidade dos retornos de um criptoativo tende a ser concentrada em determinados períodos. Momentos alta de retorno normalmente são seguidos de momento de baixa, e vice versa.</p>
+        <p>Este fato pode ser relevante para a tomada de decisão de um investidor ou especulador, com relação ao melhor momento para aportar em determinado criptoativo.</p>
+      </div>
+    );
+  };
+
   render() {
     return (
       <div>
-        <CoinSelectField onChange={this.selectCoin} data={this.props.data} />
-        <svg ref={this.myRef}></svg>
+        <div>
+          <CoinSelectField onChange={this.selectCoin} data={this.props.data} />
+          <svg ref={this.myRef}></svg>
+        </div>
+        {this.renderInsights()}
       </div>
     );
   }
