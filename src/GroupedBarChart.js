@@ -123,7 +123,7 @@ class GroupedBarChart extends React.Component {
     let allData = this.props.data;
     let height = 500;
     let width = 1000;
-    let margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    let margin = { top: 20, right: 100, bottom: 30, left: 40 };
     let coinNames = Object.keys(allData) //contem a lista com nome das moedas
     let growthRateByCoin = this.getGrowthRate(allData, coinNames); //contem um objeto com o ano e a taxa de crescimento anual, por moeda
     let yearsArray = this.createArrayYears(growthRateByCoin, coinNames) //contem um array com todos os anos existentes na base de dados
@@ -137,8 +137,9 @@ class GroupedBarChart extends React.Component {
     const keys = data.columns.slice(1)
 
     let y = d3
-      .scaleLinear()
-      .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))]).nice()
+      .scaleSymlog()
+      .domain([0, d3.max(data, d => d3.max(keys, key => d[key]))])
+      .nice()
       .rangeRound([height - margin.bottom, margin.top])
 
     let x0 = d3
@@ -151,7 +152,7 @@ class GroupedBarChart extends React.Component {
       .scaleBand()
       .domain(keys)
       .rangeRound([0, x0.bandwidth()])
-      .padding(0.05)
+      .padding(0)
 
     let xAxis = g => g
       .attr("transform", `translate(0,${height - margin.bottom})`)
@@ -160,40 +161,49 @@ class GroupedBarChart extends React.Component {
 
     let yAxis = g => g
       .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y).ticks(null, "s"))
+      .call(d3.axisLeft(y).ticks(5, "s"))
       .call(g => g.select(".domain").remove())
       .call(g => g.select(".tick:last-of-type text").clone()
-        .attr("x", 3)
+        .attr("x", -margin.left)
+        .attr("y", -12)
         .attr("text-anchor", "start")
         .attr("font-weight", "bold")
+        .attr("font-size", 15)
         .text(data.y))
 
     let color = d3.scaleOrdinal()
-      .range(["#0000ff",
-        "#8a2be2",
-        "#a52a2a",
-        "#deb887",
-        "#5f9ea0",
-        "#7fff00",
-        "#d2691e",
-        "#ff7f50",
-        "#6495ed",
-        "#fff8dc",
-        "#dc143c",
-        "#00ffff",
-        "#00008b",
-        "#008b8b",
-        "#b8860b",
-        "#ffd700",
-        "#daa520",
-        "#808080",
-        "#008000",
-        "#adff2f",
-        "#808080",
-        "#f0fff0",
-        "#ff69b4",
-        "#cd5c5c",
-        "#4b0082"])
+      .range([
+        "#201923",
+        "#fcff5d",
+        "#7dfc00",
+        "#0ec434",
+        "#228c68",
+        "#8ad8e8",
+        "#235b54",
+        "#29bdab",
+        "#3998f5",
+        "#37294f",
+        "#277da7",
+        "#3750db",
+        "#f22020",
+        "#991919",
+        "#ffcba5",
+        "#e68f66",
+        "#c56133",
+        "#96341c",
+        "#632819",
+        "#ffc413",
+        "#f47a22",
+        "#2f2aa0",
+        "#b732cc",
+        "#772b9d",
+        "#f07cab",
+        "#d30b94",
+        "#edeff3",
+        "#c3a5b4",
+        "#946aa2",
+        "#5d4c86"
+      ])
 
 
     let legend = (svg) => {
@@ -248,11 +258,26 @@ class GroupedBarChart extends React.Component {
       .call(legend);
   }
 
+  renderInsights = () => {
+    return (
+      <div className="insights">
+        <p>Essa visualização mostra o valor do Marketcap ao final de cada ano, para cada moeda. Assim, conseguimos comparar, numa visão anual, o desenvolvimento, a evolução e a variação das moedas com relação ao Marketcap (valor relativo de uma criptomoeda em relação às outras).</p>
+        <p></p>
+      </div>
+    );
+  };
+
+
+
   render() {
     return (
       <div>
-        <svg ref={this.myRef}></svg>
+        <div>
+          <svg ref={this.myRef}></svg>
+        </div>
+        {this.renderInsights()}
       </div>
+
     );
   }
 }

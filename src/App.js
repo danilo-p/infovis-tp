@@ -49,11 +49,11 @@ class App extends React.Component {
             <HorizonChart data={data} />
           </div>
           <div className="visualization-section">
-            <h2>Visualização em Grafico de Barras da capitalização do mercado de 2020</h2>
+            <h2>Capitalização do mercado de 2020</h2>
             <BarChart data={data} />
           </div>
           <div className="visualization-section">
-            <h2>Visualização em Grafico de Barras Agrupado (anual)</h2>
+            <h2>Preço final do Marketcap (agrupado ao ano)</h2>
             <GroupedBarChart data={data} />
           </div>
           <div className="visualization-section">
