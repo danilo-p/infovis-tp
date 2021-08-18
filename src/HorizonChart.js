@@ -259,7 +259,7 @@ class HorizonChart extends React.Component {
       endDate,
       selectedMetric: "Marketcap",
     });
-  }
+  };
 
   renderCoinSelector = () => {
     return (
@@ -284,7 +284,9 @@ class HorizonChart extends React.Component {
             {coin}
           </label>
         ))}
-        <button className='btn btn-link' onClick={this.clearFilters}>Limpar filtros</button>
+        <button className="btn btn-link" onClick={this.clearFilters}>
+          Limpar filtros
+        </button>
       </span>
     );
   };
@@ -292,45 +294,67 @@ class HorizonChart extends React.Component {
   applyWBTCInsightFilters = () => {
     this.clearFilters();
     this.setState({
-      selectedMetric: 'Close',
-      selectedCoins: ['Bitcoin', 'WrappedBitcoin']
-    })
-    document.getElementById('horizon-chart').scrollIntoView();
-  }
-
-  applyTetherInsightFilters = () => {
-    this.clearFilters();
-    this.setState({
-      selectedMetric: 'Open',
-      selectedCoins: ['Tether'],
-      startDate: new Date('2012-01-01'),
-      endDate: new Date()
-    })
-    document.getElementById('horizon-chart').scrollIntoView();
-  }
+      selectedMetric: "Close",
+      selectedCoins: ["Bitcoin", "WrappedBitcoin"],
+    });
+    document.getElementById("horizon-chart").scrollIntoView();
+  };
 
   applyBubbleInsightFilters = () => {
     this.clearFilters();
     this.setState({
-      selectedMetric: 'Volume',
-      startDate: new Date('2017-07-01'),
-      endDate: new Date('2018-07-01'),
-      overlap: 9
-    })
-    document.getElementById('horizon-chart').scrollIntoView();
-  }
+      selectedMetric: "Volume",
+      startDate: new Date("2017-07-01"),
+      endDate: new Date("2018-07-01"),
+      overlap: 9,
+    });
+    document.getElementById("horizon-chart").scrollIntoView();
+  };
 
   renderInsights = () => {
     return (
       <div className="horizon-chart-insights">
-        <h3>Fatos interessantes</h3>
-        <ol>
-          <li>"Other cryptocurrencies' prices also sharply rose, then followed by losses of value during this period. In May 2021, the value of Dogecoin, originally created as a joke, increased to 20,000% of value in one year.[52] It then dropped 34% over the weekend." <a href="https://en.wikipedia.org/wiki/Cryptocurrency_bubble">https://en.wikipedia.org/wiki/Cryptocurrency_bubble</a>. <strong>A popularidade do Bitcoin influenciou o mercado de criptomoedas como um todo em 2018.</strong> <button className='btn btn-link' onClick={this.applyBubbleInsightFilters}>Ver fato</button></li>
-
-          <li>"Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin (BTC) on the Ethereum blockchain. A key advantage of WBTC is its integration into the world of Ethereum wallets, dapps, and smart contracts. Through a WBTC partner, 1 Bitcoin can be converted to 1 Wrapped Bitcoin, and vice-versa." <a href="https://help.coinbase.com/en/coinbase/trading-and-funding/cryptocurrency-trading-pairs/wbtc">https://help.coinbase.com/en/coinbase/trading-and-funding/cryptocurrency-trading-pairs/wbtc</a>. <strong>Isso faz com que o preço de fechamento, abertura, máximas e mínimas sejam identicos entre as duas moedas.</strong> <button className='btn btn-link' onClick={this.applyWBTCInsightFilters}>Ver fato</button></li>
-
-          <li>"Tether is called a stablecoin because it was originally designed to always be worth $1.00, maintaining $1.00 in reserves for each tether issued." <a href="https://en.wikipedia.org/wiki/Tether_(cryptocurrency)">https://en.wikipedia.org/wiki/Tether_(cryptocurrency)</a>. <strong>Isso faz com que o seu preço esteja sempre estável desde seu lançamento.</strong> <button className='btn btn-link' onClick={this.applyTetherInsightFilters}>Ver fato</button></li>
-        </ol>
+        <p>
+          <button
+            className="btn btn-link"
+            onClick={this.applyBubbleInsightFilters}
+          >
+            Visualizar no gráfico
+          </button>{" "}
+          "Other cryptocurrencies' prices also sharply rose, then followed by
+          losses of value during this period. In May 2021, the value of
+          Dogecoin, originally created as a joke, increased to 20,000% of value
+          in one year.[52] It then dropped 34% over the weekend."{" "}
+          <a href="https://en.wikipedia.org/wiki/Cryptocurrency_bubble">
+            https://en.wikipedia.org/wiki/Cryptocurrency_bubble
+          </a>
+          .{" "}
+          <strong>
+            A popularidade do Bitcoin influenciou o mercado de criptomoedas como
+            um todo em 2018.
+          </strong>
+        </p>
+        <p>
+          <button
+            className="btn btn-link"
+            onClick={this.applyWBTCInsightFilters}
+          >
+            Visualizar no gráfico
+          </button>{" "}
+          "Wrapped Bitcoin (WBTC) is an ERC-20 token that represents Bitcoin
+          (BTC) on the Ethereum blockchain. A key advantage of WBTC is its
+          integration into the world of Ethereum wallets, dapps, and smart
+          contracts. Through a WBTC partner, 1 Bitcoin can be converted to 1
+          Wrapped Bitcoin, and vice-versa."{" "}
+          <a href="https://help.coinbase.com/en/coinbase/trading-and-funding/cryptocurrency-trading-pairs/wbtc">
+            https://help.coinbase.com/en/coinbase/trading-and-funding/cryptocurrency-trading-pairs/wbtc
+          </a>
+          .{" "}
+          <strong>
+            Isso faz com que o preço de fechamento, abertura, máximas e mínimas
+            sejam identicos entre as duas moedas.
+          </strong>
+        </p>
       </div>
     );
   };

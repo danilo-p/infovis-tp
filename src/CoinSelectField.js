@@ -5,7 +5,7 @@ class CoinSelectField extends React.Component {
   constructor(props) {
     super(props);
 
-    let selectedCoin = Object.keys(props.data)[0];
+    let selectedCoin = props.initialSelectedCoin || Object.keys(props.data)[0];
     this.state = {
       selectedCoin,
     };

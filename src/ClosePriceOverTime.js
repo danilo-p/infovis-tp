@@ -89,8 +89,25 @@ class ClosePriceOverTime extends React.Component {
   render() {
     return (
       <div>
-        <CoinSelectField onChange={this.selectCoin} data={this.props.data} />
+        <CoinSelectField
+          onChange={this.selectCoin}
+          data={this.props.data}
+          initialSelectedCoin="Tether"
+        />
         <svg ref={this.myRef}></svg>
+        <p>
+          "Tether is called a stablecoin because it was originally designed to
+          always be worth $1.00, maintaining $1.00 in reserves for each tether
+          issued."{" "}
+          <a href="https://en.wikipedia.org/wiki/Tether_(cryptocurrency)">
+            https://en.wikipedia.org/wiki/Tether_(cryptocurrency)
+          </a>
+          .{" "}
+          <strong>
+            Isso faz com que o seu preço esteja sempre estável desde seu
+            lançamento.
+          </strong>
+        </p>
       </div>
     );
   }
